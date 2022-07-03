@@ -15,35 +15,48 @@ void printArray(std::vector<int>& arr)
     std::cout << std::endl;
 }
 
-/****************************** MAX CONSECUTIVE ONES ********************************
+/******************* FIND NUMBERS WITH EVEN NUMBER OF DIGITS *************************
 *************************************************************************************/
-int findMaxConsecutiveOnes(std::vector<int>& nums) {
-       int countConsecutiveNumberOnes = 0;
-        int maxConsecutiveNumberOnes  = 0;
+bool isNumberOven(const int &input_num)
+{
+    int value = input_num;
+    int countNumberOfValue = 0;
+    
+    do
+    {
+        value = value / 10;
+        ++countNumberOfValue;
+    } while (value != 0);
+    
+    if((countNumberOfValue % 2) == 0)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
 
-        for(auto it = nums.begin(); it != nums.end(); ++it)
+int findNumbers(std::vector<int>& nums) {
+    int contNumberOven = 0;
+
+    for(auto it = nums.begin(); it != nums.end(); ++it)
+    {
+        if(true == isNumberOven(*it))
         {
-            if(*it == 1)
-            {
-                ++countConsecutiveNumberOnes;
-                if(maxConsecutiveNumberOnes < countConsecutiveNumberOnes)
-                {
-                    maxConsecutiveNumberOnes = countConsecutiveNumberOnes;
-                }
-            }
-            else
-            {
-                countConsecutiveNumberOnes = 0;
-            }
+            ++contNumberOven;
         }
-    return maxConsecutiveNumberOnes;
+    }
+
+    return contNumberOven;
 }
 
 
 int main()
 {
-    std::vector<int> nums1 = {1,1,0,1,1,1};
-    std::cout << findMaxConsecutiveOnes(nums1) << std::endl;
+    std::vector<int> nums1 = {12,345,2,6,7896};
+    std::cout << findNumbers(nums1) << std::endl;
     
     return 0;
 }
