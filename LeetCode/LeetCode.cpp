@@ -15,41 +15,35 @@ void printArray(std::vector<int>& arr)
     std::cout << std::endl;
 }
 
-/*************************** SQUARES OF A SORTED ARRAY ******************************
+/********************************* DUPLICATE ZEROS **********************************
 *************************************************************************************/
-std::vector<int> sortedSquares(std::vector<int>& nums) {
-        int leftPosition = 0;
-        int rightPosition = nums.size() - 1;
-        std::vector<int> result(nums.size());
-        
+void duplicateZeros(std::vector<int>& arr) {
+    int lenght = arr.size();
 
-        int leftValue = 0;
-        int rightValue = 0;
-
-        for(int i = rightPosition; i >= 0; i--)
+    for(int i = 0; i < lenght; i++)
+    {
+        if(arr[i] == 0)
         {
-            leftValue = nums[leftPosition] * nums[leftPosition];
-            rightValue = nums[rightPosition] * nums[rightPosition];
-            if(leftValue > rightValue)
+            for(int j = lenght - 1; j > i + 1; j--)
             {
-                result[i] = leftValue;
-                ++leftPosition;
+                arr[j] = arr[j - 1];
             }
-            else
+
+            i++;
+            if(i < lenght)
             {
-                result[i] = rightValue;
-                --rightPosition;
+                arr[i] = 0;
             }
         }
-        return result;
+    }
 }
 
 
 int main()
 {
-    std::vector<int> nums1 = {-4,-1,0,3,10};
-    std::vector<int> result = sortedSquares(nums1);
-    printArray(result);
+    std::vector<int> nums1 = {1,0,2,3,0,4,5,0};
+    duplicateZeros(nums1);
+    printArray(nums1);
     return 0;
 }
 
