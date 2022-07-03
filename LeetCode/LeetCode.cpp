@@ -15,35 +15,33 @@ void printArray(std::vector<int>& arr)
     std::cout << std::endl;
 }
 
-/********************************* DUPLICATE ZEROS **********************************
+/****************************** REMOVE ELEMENT ***************************************
 *************************************************************************************/
-void duplicateZeros(std::vector<int>& arr) {
-    int lenght = arr.size();
+int removeElement(std::vector<int>& nums, int val) {
+    int i = 0;
+    int j = 0;
+    int lenght = nums.size();
 
     for(int i = 0; i < lenght; i++)
     {
-        if(arr[i] == 0)
+        if(nums[i] != val)
         {
-            for(int j = lenght - 1; j > i + 1; j--)
-            {
-                arr[j] = arr[j - 1];
-            }
-
-            i++;
-            if(i < lenght)
-            {
-                arr[i] = 0;
-            }
+            nums[j++] = nums[i];
+        }
+        else
+        {
+            nums[i] = 0;
         }
     }
-}
 
+    return j;
+}
 
 int main()
 {
-    std::vector<int> nums1 = {1,0,2,3,0,4,5,0};
-    duplicateZeros(nums1);
-    printArray(nums1);
+    std::vector<int> nums1 = {3,2,2,3};
+    int val = 3;
+    std::cout << removeElement(nums1, val) << std::endl;
     return 0;
 }
 
