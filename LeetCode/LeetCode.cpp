@@ -15,47 +15,69 @@ void printArray(std::vector<int>& arr)
     std::cout << std::endl;
 }
 
-/********************* CHECK IF N AND ITS DOUBLE EXIST ******************************
+/**************************** VALID MOUNTAIN ARRAY **********************************
 *************************************************************************************/
-bool checkIfExist(std::vector<int>& arr) {
-    bool isExist = false;
+int getIndexMaxValueOfArray(std::vector<int>& arr)
+{
+    int maxValue = arr[0];
+    int lenght = arr.size();
+    int index = 0;
+    
+    for(int i = 1; i < lenght; i++)
+    {
+        if(maxValue < arr[i])
+        {
+            maxValue = arr[i];
+            index = i;
+        }
+    }
+
+    return index;
+}    
+    
+bool validMountainArray(std::vector<int>& arr) {
+    bool isMountainArray = false;
+    int maxValueIndex = getIndexMaxValueOfArray(arr);
     int lenght = arr.size();
 
-    std::vector<int>arrAfterMultipleTwo(lenght);
 
-    for(int i = 0; i < lenght; i++)
+    for(int i = 0; i <= maxValueIndex - 1; i++)
     {
-        arrAfterMultipleTwo[i] = arr[i] * 2;
-    }
-
-    for(int i = 0; i < lenght; i++)
-    {
-        for(int j = 0; j < lenght; j++)
+        if(arr[i] >= arr[i + 1])
         {
-            if(arr[i] == arrAfterMultipleTwo[j])
-            {
-                if(i != j)
-                {
-                    isExist = true;
-                    break;
-                }
-            }
-        }
-        if(isExist)
-        {
+            isMountainArray = false;
             break;
         }
+        else
+        {
+            isMountainArray = true;
+        }
     }
 
-    return isExist;
+    if(isMountainArray)
+    {
+        isMountainArray = false;
+        for(int i = maxValueIndex; i < lenght - 1; i++)
+        {
+            if(arr[i] <= arr[i + 1])
+            {
+                isMountainArray = false;
+                break;
+            }
+            else
+            {
+                isMountainArray = true;
+            }
+        }
+    }
+    return isMountainArray;
 }
-
 
 
 int main()
 {
-    std::vector<int> nums1 = {10,2,5,3};
-    std::cout << checkIfExist(nums1) << std::endl;
+    std::vector<int> nums1 = {2,1};
+    std::cout << validMountainArray(nums1) << std::endl;
 
     return 0;
 }
