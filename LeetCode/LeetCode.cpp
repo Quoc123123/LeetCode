@@ -15,34 +15,48 @@ void printArray(std::vector<int>& arr)
     std::cout << std::endl;
 }
 
-/********************* REMOVE DUPLICATES FROM SORTED ARRAY **************************
+/********************* CHECK IF N AND ITS DOUBLE EXIST ******************************
 *************************************************************************************/
-int removeDuplicates(std::vector<int>& nums) {
-    int lenght = nums.size();
-    int preValue = nums[0];
-    int curValue = preValue;
-    int j = 0;
-    int i = 0;
-    for(i = 0; i < lenght; i++)
+bool checkIfExist(std::vector<int>& arr) {
+    bool isExist = false;
+    int lenght = arr.size();
+
+    std::vector<int>arrAfterMultipleTwo(lenght);
+
+    for(int i = 0; i < lenght; i++)
     {
-        curValue = nums[i];
-        if(curValue != preValue)
+        arrAfterMultipleTwo[i] = arr[i] * 2;
+    }
+
+    for(int i = 0; i < lenght; i++)
+    {
+        for(int j = 0; j < lenght; j++)
         {
-            nums[j++] = preValue;
-            preValue = curValue;
+            if(arr[i] == arrAfterMultipleTwo[j])
+            {
+                if(i != j)
+                {
+                    isExist = true;
+                    break;
+                }
+            }
+        }
+        if(isExist)
+        {
+            break;
         }
     }
-    nums[j++] = preValue;
-    return j;
+
+    return isExist;
 }
+
 
 
 int main()
 {
-    std::vector<int> nums1 = {1,1,2};
-    int result = removeDuplicates(nums1);
-    printArray(nums1);
-    std::cout << result << std::endl;
+    std::vector<int> nums1 = {10,2,5,3};
+    std::cout << checkIfExist(nums1) << std::endl;
+
     return 0;
 }
 
