@@ -15,49 +15,41 @@ void printArray(std::vector<int>& arr)
     std::cout << std::endl;
 }
 
-/******************* FIND NUMBERS WITH EVEN NUMBER OF DIGITS *************************
+/*************************** SQUARES OF A SORTED ARRAY ******************************
 *************************************************************************************/
-bool isNumberOven(const int &input_num)
-{
-    int value = input_num;
-    int countNumberOfValue = 0;
-    
-    do
-    {
-        value = value / 10;
-        ++countNumberOfValue;
-    } while (value != 0);
-    
-    if((countNumberOfValue % 2) == 0)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
+std::vector<int> sortedSquares(std::vector<int>& nums) {
+        int leftPosition = 0;
+        int rightPosition = nums.size() - 1;
+        std::vector<int> result(nums.size());
+        
 
-int findNumbers(std::vector<int>& nums) {
-    int contNumberOven = 0;
+        int leftValue = 0;
+        int rightValue = 0;
 
-    for(auto it = nums.begin(); it != nums.end(); ++it)
-    {
-        if(true == isNumberOven(*it))
+        for(int i = rightPosition; i >= 0; i--)
         {
-            ++contNumberOven;
+            leftValue = nums[leftPosition] * nums[leftPosition];
+            rightValue = nums[rightPosition] * nums[rightPosition];
+            if(leftValue > rightValue)
+            {
+                result[i] = leftValue;
+                ++leftPosition;
+            }
+            else
+            {
+                result[i] = rightValue;
+                --rightPosition;
+            }
         }
-    }
-
-    return contNumberOven;
+        return result;
 }
 
 
 int main()
 {
-    std::vector<int> nums1 = {12,345,2,6,7896};
-    std::cout << findNumbers(nums1) << std::endl;
-    
+    std::vector<int> nums1 = {-4,-1,0,3,10};
+    std::vector<int> result = sortedSquares(nums1);
+    printArray(result);
     return 0;
 }
 
