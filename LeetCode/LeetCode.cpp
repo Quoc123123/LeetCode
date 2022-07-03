@@ -15,33 +15,34 @@ void printArray(std::vector<int>& arr)
     std::cout << std::endl;
 }
 
-/****************************** REMOVE ELEMENT ***************************************
+/********************* REMOVE DUPLICATES FROM SORTED ARRAY **************************
 *************************************************************************************/
-int removeElement(std::vector<int>& nums, int val) {
-    int i = 0;
-    int j = 0;
+int removeDuplicates(std::vector<int>& nums) {
     int lenght = nums.size();
-
-    for(int i = 0; i < lenght; i++)
+    int preValue = nums[0];
+    int curValue = preValue;
+    int j = 0;
+    int i = 0;
+    for(i = 0; i < lenght; i++)
     {
-        if(nums[i] != val)
+        curValue = nums[i];
+        if(curValue != preValue)
         {
-            nums[j++] = nums[i];
-        }
-        else
-        {
-            nums[i] = 0;
+            nums[j++] = preValue;
+            preValue = curValue;
         }
     }
-
+    nums[j++] = preValue;
     return j;
 }
 
+
 int main()
 {
-    std::vector<int> nums1 = {3,2,2,3};
-    int val = 3;
-    std::cout << removeElement(nums1, val) << std::endl;
+    std::vector<int> nums1 = {1,1,2};
+    int result = removeDuplicates(nums1);
+    printArray(nums1);
+    std::cout << result << std::endl;
     return 0;
 }
 
