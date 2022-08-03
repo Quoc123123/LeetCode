@@ -109,6 +109,26 @@ std::vector<int> replaceElements(std::vector<int>& arr)
     return arr;
 }
 
+
+int removeDuplicates(std::vector<int>& nums) {
+    int lenght = nums.size();
+    int preValue = nums[0];
+    int curValue = preValue;
+    int j = 0;
+    int i = 0;
+    for(i = 0; i < lenght; i++)
+    {
+        curValue = nums[i];
+        if(curValue != preValue)
+        {
+            nums[j++] = preValue;
+            preValue = curValue;
+        }
+    }
+    nums[j++] = preValue;
+    return j;
+}
+
 int main()
 {
     std::vector<int> nums1 = {2,1};
