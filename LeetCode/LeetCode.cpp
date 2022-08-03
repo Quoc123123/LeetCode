@@ -73,6 +73,41 @@ bool validMountainArray(std::vector<int>& arr) {
     return isMountainArray;
 }
 
+std::vector<int> replaceElements(std::vector<int>& arr) 
+{
+    // int lenght = arr.size();
+    // int a = -1, b = 0;
+    // for(int i = lenght - 1; i >= 0; i--)
+    // {
+    //     b = arr[i];
+    //     arr[i] = a;
+    //     if(a < b)
+    //     {
+    //         a = b;
+    //     }
+    // }
+
+    int lenght = arr.size();
+    int maxValue = 0;
+    int i = 0;
+
+    for(i = 0; i < lenght - 1; i++)
+    {
+        for(int j = i + 1; j < lenght; j++)
+        {
+            if(maxValue < arr[j])
+            {
+                maxValue = arr[j];
+            }
+        }
+        arr[i] = maxValue;
+        maxValue = 0; 
+    }
+
+    arr[i] = -1;
+
+    return arr;
+}
 
 int main()
 {
