@@ -129,6 +129,26 @@ int removeDuplicates(std::vector<int>& nums) {
     return j;
 }
 
+void moveZeroes(std::vector<int>& nums) 
+{
+    int i = 0;
+    int j = 0;
+    int lenght = nums.size();
+
+    for(i = 0; i < lenght; i++)
+    {
+        if(nums[i] != 0)
+        {
+            nums[j++] = nums[i];
+        }
+    }    
+
+    for(i = j; i < lenght; i++)
+    {
+        nums[i] = 0;
+    }
+}
+
 int main()
 {
     std::vector<int> nums1 = {2,1};
