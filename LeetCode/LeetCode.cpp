@@ -239,6 +239,40 @@ int heightChecker(std::vector<int>& heights)
     return count;
 }
 
+
+int thirdMax(std::vector<int>& nums) {
+    int result = 0;
+    int temp = 0;
+    int lenght = nums.size();
+
+    // sort input
+    for(int i = 0; i < lenght - 1; i++)
+    {
+        for (int j = i; j < lenght; j++)
+        {
+            if(nums[i] > nums[j])
+            {
+                temp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = temp;
+            }
+        }
+    }
+
+    // remove duplicate
+    int new_lenght = removeDuplicates(nums);
+    
+    if(new_lenght < 3)
+    {
+        result = nums[new_lenght - 1];
+    }
+    else
+    {
+        result = nums[new_lenght - 1 - 2];
+    }
+    return result;
+}
+
 int main()
 {
     std::vector<int> nums1 = {2,1};
