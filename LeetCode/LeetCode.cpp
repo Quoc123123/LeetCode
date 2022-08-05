@@ -207,6 +207,37 @@ std::vector<int> sortArrayByParity(std::vector<int>& nums) {
 }
 
 
+int heightChecker(std::vector<int>& heights) 
+{
+    int lenght = heights.size();
+    int temp = 0; 
+    int count = 0;
+    std::vector<int> copy_heights = heights;
+
+    for(int i = 0; i < lenght - 1; i++)
+    {
+        for (int j = i; j < lenght; j++)
+        {
+            if(heights[i] > heights[j])
+            {
+                temp = heights[i];
+                heights[i] = heights[j];
+                heights[j] = temp;
+            }
+        }
+    }
+
+    for(int i = 0; i < lenght; i++)
+    {
+        if(copy_heights[i] != heights[i])
+        {
+            ++count;
+        }
+        
+    }
+
+    return count;
+}
 
 int main()
 {
