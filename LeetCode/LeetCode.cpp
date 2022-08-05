@@ -149,6 +149,65 @@ void moveZeroes(std::vector<int>& nums)
     }
 }
 
+bool isEvenNumber(int number)
+{
+    if((number % 2) == 0)
+    {
+        return true;    
+    }
+
+    return false;
+}
+
+void swapNumber(std::vector<int>& nums, int index1, int index2)
+{
+    int temp = nums[index1];
+    nums[index1] =  nums[index2];
+    nums[index2] = temp;
+}
+
+std::vector<int> sortArrayByParity(std::vector<int>& nums) {
+    int lenght = nums.size();
+    int leftIndex = 0;
+    int rightIndex = lenght - 1;
+
+    bool leftValue = false;
+    bool rightValue = false;
+
+    
+    while(leftIndex < rightIndex)
+    {
+        leftValue = isEvenNumber(nums[leftIndex]);
+        rightValue = isEvenNumber(nums[rightIndex]);
+
+        if((false == leftValue) && (true == rightValue))
+        {
+    
+            swapNumber(nums, leftIndex, rightIndex);
+            leftIndex++;
+            rightIndex--;
+
+        }
+        else if((true == leftValue) && (true == rightValue))
+        {
+            leftIndex++;
+        }
+         else if((true == leftValue) && (false == rightValue))
+        {
+            leftIndex++;
+        }
+        else
+        {
+            rightIndex--;
+        }
+    }
+
+   
+    return nums;
+}
+
+
+
 int main()
 {
     std::vector<int> nums1 = {2,1};
