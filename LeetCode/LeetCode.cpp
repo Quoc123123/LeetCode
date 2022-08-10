@@ -494,6 +494,30 @@ public:
     return false;
 }
 
+
+ListNode *detectCycle(ListNode *head) {
+    ListNode  *slow_node = head;
+    ListNode  *fast_node = head;
+
+    while(NULL != slow_node && NULL != fast_node && NULL != fast_node->next)
+    {
+        slow_node = slow_node->next;
+        fast_node = fast_node->next;
+        fast_node = fast_node->next;
+        if(fast_node == slow_node)
+        {
+            slow_node = head;
+            while(slow_node != fast_node)
+            {
+                slow_node = slow_node->next;
+                fast_node = fast_node->next;
+            }
+            return slow_node;
+        }
+    }
+    return NULL;
+}
+
 int main()
 {
     std::vector<int> nums1 = {2,1};
