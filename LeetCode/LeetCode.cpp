@@ -547,6 +547,57 @@ ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
     return A_node;    
 }
 
+ListNode* removeNthFromEnd(ListNode* head, int n) {
+    ListNode  *cur_node = head;
+    int count = 0;
+
+    // Find the number of nodes
+    while(NULL != cur_node)
+    {
+        cur_node = cur_node->next;
+        ++count;
+    }
+
+    // Calculate position that need to erase
+    int pos = count - n;
+    int new_count = 0;
+    cur_node = head;
+    ListNode *pre_node = head;
+
+    while(NULL != cur_node)
+    {
+        // Case at head position
+        if(0 == pos)
+        {
+            if(1 == pos)
+            {
+                delete head;
+                head = NULL;
+            }
+            else
+            {
+                head = head->next;
+                delete cur_node;
+            }
+            break;
+        }
+        else
+        {
+            if(new_count == pos)
+            {
+                pre_node->next = cur_node->next;
+                delete cur_node;
+                break;
+            }
+            pre_node = cur_node;
+            cur_node = cur_node->next;
+            ++new_count;
+        }
+    }   
+
+    return head;
+}
+
 int main()
 {
     std::vector<int> nums1 = {2,1};
