@@ -273,6 +273,28 @@ int thirdMax(std::vector<int>& nums) {
     return result;
 }
 
+std::vector<int> findDisappearedNumbers(std::vector<int>& nums) {
+    int lenght = nums.size();
+    std::vector<int> result;
+    int current_value = 0;
+    
+    for(int i = 0; i < lenght ; i++)
+    {
+        current_value = abs(nums[i]);
+        nums[current_value - 1] = -abs(nums[current_value - 1]);
+    }
+
+    for(int i = 0; i < lenght; i++)
+    {
+        if(nums[i] > 0)
+        {
+            result.push_back(i + 1);
+        }
+    }
+    
+    return result;
+}
+
 int main()
 {
     std::vector<int> nums1 = {2,1};
