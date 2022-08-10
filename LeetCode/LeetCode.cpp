@@ -518,6 +518,35 @@ ListNode *detectCycle(ListNode *head) {
     return NULL;
 }
 
+
+ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+    ListNode  *A_node = headA;
+    ListNode  *B_node = headB;
+
+    while(A_node != B_node)
+    {
+        if(NULL == A_node)
+        {
+            A_node = headB;
+        }
+        else
+        {
+            A_node = A_node->next; 
+        }
+
+        if(NULL == B_node)
+        {
+            B_node = headA;
+        }
+        else
+        {
+            B_node = B_node->next; 
+        }
+    }
+
+    return A_node;    
+}
+
 int main()
 {
     std::vector<int> nums1 = {2,1};
