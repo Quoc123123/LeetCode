@@ -295,6 +295,181 @@ std::vector<int> findDisappearedNumbers(std::vector<int>& nums) {
     return result;
 }
 
+
+struct SinglyListNode {
+    int val;
+    SinglyListNode *next;
+    SinglyListNode(int x) : val(x), next(NULL) {}
+};
+
+class MyLinkedList {
+private:
+    SinglyListNode  *head_node;
+
+public:
+    MyLinkedList() {
+        head_node = NULL;
+    }
+    
+    int getLenght(void)
+    {
+        SinglyListNode  *cur_node = head_node;
+        int count = 0;
+        
+        while(NULL != cur_node)
+        {
+            cur_node = cur_node->next;
+            ++count;
+        }
+
+        return count;
+    }
+    
+    
+    int get(int index) {
+        SinglyListNode  *cur_node = head_node;
+        int count = 0;
+        
+        if(head_node == NULL)
+        {
+            return -1;
+        }
+
+        while(NULL != cur_node)
+        {
+            if(count == index)
+            {
+                return cur_node->val;
+            }
+            cur_node = cur_node->next;
+            ++count;
+        }
+
+        return -1;
+    }
+    
+    void addAtHead(int val) {
+        SinglyListNode  *new_node = new SinglyListNode(val);
+        if(NULL == head_node)
+        {
+            head_node = new_node;
+        }
+        else
+        {
+            new_node->next = head_node;
+            head_node = new_node;
+        }
+    }
+    
+    void addAtTail(int val) {
+        SinglyListNode  *new_node = new SinglyListNode(val);
+        SinglyListNode  *cur_node = head_node;
+
+        if(NULL == head_node)
+        {
+            head_node = new_node;
+        }
+        else
+        {
+            while(NULL != cur_node->next)
+            {
+                cur_node = cur_node->next;
+            }
+            cur_node->next = new_node;
+        }
+    }
+    
+    void addAtIndex(int index, int val) {
+         int lenght = getLenght();
+
+        if(lenght == index)
+        {
+            addAtTail(val);
+        }
+        else if(0 == index)
+        {
+            addAtHead(val);
+        }
+        else if(index < lenght)
+        {
+            SinglyListNode  *new_node = new SinglyListNode(val);
+            SinglyListNode  *cur_node = head_node;
+            SinglyListNode  *pre_node = head_node;
+            int count = 0;
+            
+            while(NULL != cur_node)
+            {
+                if(count == index)
+                {
+                    new_node->next = pre_node->next;
+                    pre_node->next = new_node;
+                    return;
+                }
+                pre_node = cur_node;
+                cur_node = cur_node->next;
+                ++count;
+            }
+        }
+        else
+        {
+            // Do nothing
+        }
+    }
+    
+    void deleteAtIndex(int index) 
+    {
+        SinglyListNode  *cur_node = head_node;
+
+        if(head_node == NULL)
+        {
+            return;
+        }
+
+        int lenght = getLenght();
+
+        if(0 == index)
+        {
+            head_node = head_node-> next;
+            delete cur_node;
+        }
+        else if(index < lenght)
+        {
+            SinglyListNode  *cur_node = head_node;
+            SinglyListNode  *pre_node = head_node;
+            SinglyListNode  *temp_node;
+            int count = 0;
+            
+            while(NULL != cur_node)
+            {
+                if(count == index)
+                {
+                    temp_node = cur_node;
+                    pre_node->next = cur_node->next;
+                    delete cur_node;
+                    return;
+                }
+                pre_node = cur_node;
+                cur_node = cur_node->next;
+                ++count;
+            }
+        }
+        else 
+        {
+            // Do nothing
+        }
+    }
+};
+
+/**
+ * Your MyLinkedList object will be instantiated and called as such:
+ * MyLinkedList* obj = new MyLinkedList();
+ * int param_1 = obj->get(index);
+ * obj->addAtHead(val);
+ * obj->addAtTail(val);
+ * obj->addAtIndex(index,val);
+ * obj->deleteAtIndex(index);
+ */
+
 int main()
 {
     std::vector<int> nums1 = {2,1};
