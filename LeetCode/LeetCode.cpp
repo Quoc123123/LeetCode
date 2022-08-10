@@ -302,6 +302,12 @@ struct SinglyListNode {
     SinglyListNode(int x) : val(x), next(NULL) {}
 };
 
+struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode(int x) : val(x), next(NULL) {}
+};
+
 class MyLinkedList {
 private:
     SinglyListNode  *head_node;
@@ -469,6 +475,24 @@ public:
  * obj->addAtIndex(index,val);
  * obj->deleteAtIndex(index);
  */
+
+ bool hasCycle(ListNode *head) {
+    ListNode  *slow_node = head;
+    ListNode  *fast_node = head;
+
+    while(NULL != slow_node && NULL != fast_node && NULL != fast_node->next)
+    {
+        slow_node = slow_node->next;
+        fast_node = fast_node->next;
+        fast_node = fast_node->next;
+        if(fast_node == slow_node)
+        {
+            return true;                
+        }
+    }
+
+    return false;
+}
 
 int main()
 {
