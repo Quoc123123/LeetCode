@@ -3,605 +3,106 @@
 
 #include <iostream>
 #include <vector>
+#include <string>
+
+using namespace std;
 
 /********************************** INPUT/OUTPUT ************************************
 ************************************************************************************/
-void printArray(std::vector<int>& arr)
+template <typename T>
+void print_output(vector<T> &input)
 {
-    for(int i = 0; i < arr.size(); i++)
+    for (const auto &iteration : input)
     {
-        std::cout << arr[i] << " ";
+        cout << iteration << " ";
     }
-    std::cout << std::endl;
+    cout << endl;
 }
 
-/**************************** VALID MOUNTAIN ARRAY **********************************
-*************************************************************************************/
-int getIndexMaxValueOfArray(std::vector<int>& arr)
+vector<string> fizzBuzz(int n)
 {
-    int maxValue = arr[0];
-    int lenght = arr.size();
-    int index = 0;
-    
-    for(int i = 1; i < lenght; i++)
+    vector<string> result;
+    bool is_divisible_by3 = false;
+    bool is_divisible_by5 = false;
+
+    for (uint16_t i = 1; i <= n; i++)
     {
-        if(maxValue < arr[i])
+        is_divisible_by3 = i % 3 == 0 ? true : false;
+        is_divisible_by5 = i % 5 == 0 ? true : false;
+
+        if (is_divisible_by3 && is_divisible_by5)
         {
-            maxValue = arr[i];
-            index = i;
+            result.push_back("FizzBuzz");
         }
-    }
-
-    return index;
-}    
-    
-bool validMountainArray(std::vector<int>& arr) {
-    bool isMountainArray = false;
-    int maxValueIndex = getIndexMaxValueOfArray(arr);
-    int lenght = arr.size();
-
-
-    for(int i = 0; i <= maxValueIndex - 1; i++)
-    {
-        if(arr[i] >= arr[i + 1])
+        else if (is_divisible_by3)
         {
-            isMountainArray = false;
-            break;
+            result.push_back("Fizz");
+        }
+        else if (is_divisible_by5)
+        {
+            result.push_back("Buzz");
         }
         else
         {
-            isMountainArray = true;
+            result.push_back(to_string(i));
         }
     }
 
-    if(isMountainArray)
-    {
-        isMountainArray = false;
-        for(int i = maxValueIndex; i < lenght - 1; i++)
-        {
-            if(arr[i] <= arr[i + 1])
-            {
-                isMountainArray = false;
-                break;
-            }
-            else
-            {
-                isMountainArray = true;
-            }
-        }
-    }
-    return isMountainArray;
-}
-
-std::vector<int> replaceElements(std::vector<int>& arr) 
-{
-    // int lenght = arr.size();
-    // int a = -1, b = 0;
-    // for(int i = lenght - 1; i >= 0; i--)
-    // {
-    //     b = arr[i];
-    //     arr[i] = a;
-    //     if(a < b)
-    //     {
-    //         a = b;
-    //     }
-    // }
-
-    int lenght = arr.size();
-    int maxValue = 0;
-    int i = 0;
-
-    for(i = 0; i < lenght - 1; i++)
-    {
-        for(int j = i + 1; j < lenght; j++)
-        {
-            if(maxValue < arr[j])
-            {
-                maxValue = arr[j];
-            }
-        }
-        arr[i] = maxValue;
-        maxValue = 0; 
-    }
-
-    arr[i] = -1;
-
-    return arr;
-}
-
-
-int removeDuplicates(std::vector<int>& nums) {
-    int lenght = nums.size();
-    int preValue = nums[0];
-    int curValue = preValue;
-    int j = 0;
-    int i = 0;
-    for(i = 0; i < lenght; i++)
-    {
-        curValue = nums[i];
-        if(curValue != preValue)
-        {
-            nums[j++] = preValue;
-            preValue = curValue;
-        }
-    }
-    nums[j++] = preValue;
-    return j;
-}
-
-void moveZeroes(std::vector<int>& nums) 
-{
-    int i = 0;
-    int j = 0;
-    int lenght = nums.size();
-
-    for(i = 0; i < lenght; i++)
-    {
-        if(nums[i] != 0)
-        {
-            nums[j++] = nums[i];
-        }
-    }    
-
-    for(i = j; i < lenght; i++)
-    {
-        nums[i] = 0;
-    }
-}
-
-bool isEvenNumber(int number)
-{
-    if((number % 2) == 0)
-    {
-        return true;    
-    }
-
-    return false;
-}
-
-void swapNumber(std::vector<int>& nums, int index1, int index2)
-{
-    int temp = nums[index1];
-    nums[index1] =  nums[index2];
-    nums[index2] = temp;
-}
-
-std::vector<int> sortArrayByParity(std::vector<int>& nums) {
-    int lenght = nums.size();
-    int leftIndex = 0;
-    int rightIndex = lenght - 1;
-
-    bool leftValue = false;
-    bool rightValue = false;
-
-    
-    while(leftIndex < rightIndex)
-    {
-        leftValue = isEvenNumber(nums[leftIndex]);
-        rightValue = isEvenNumber(nums[rightIndex]);
-
-        if((false == leftValue) && (true == rightValue))
-        {
-    
-            swapNumber(nums, leftIndex, rightIndex);
-            leftIndex++;
-            rightIndex--;
-
-        }
-        else if((true == leftValue) && (true == rightValue))
-        {
-            leftIndex++;
-        }
-         else if((true == leftValue) && (false == rightValue))
-        {
-            leftIndex++;
-        }
-        else
-        {
-            rightIndex--;
-        }
-    }
-
-   
-    return nums;
-}
-
-
-int heightChecker(std::vector<int>& heights) 
-{
-    int lenght = heights.size();
-    int temp = 0; 
-    int count = 0;
-    std::vector<int> copy_heights = heights;
-
-    for(int i = 0; i < lenght - 1; i++)
-    {
-        for (int j = i; j < lenght; j++)
-        {
-            if(heights[i] > heights[j])
-            {
-                temp = heights[i];
-                heights[i] = heights[j];
-                heights[j] = temp;
-            }
-        }
-    }
-
-    for(int i = 0; i < lenght; i++)
-    {
-        if(copy_heights[i] != heights[i])
-        {
-            ++count;
-        }
-        
-    }
-
-    return count;
-}
-
-
-int thirdMax(std::vector<int>& nums) {
-    int result = 0;
-    int temp = 0;
-    int lenght = nums.size();
-
-    // sort input
-    for(int i = 0; i < lenght - 1; i++)
-    {
-        for (int j = i; j < lenght; j++)
-        {
-            if(nums[i] > nums[j])
-            {
-                temp = nums[i];
-                nums[i] = nums[j];
-                nums[j] = temp;
-            }
-        }
-    }
-
-    // remove duplicate
-    int new_lenght = removeDuplicates(nums);
-    
-    if(new_lenght < 3)
-    {
-        result = nums[new_lenght - 1];
-    }
-    else
-    {
-        result = nums[new_lenght - 1 - 2];
-    }
     return result;
 }
 
-std::vector<int> findDisappearedNumbers(std::vector<int>& nums) {
-    int lenght = nums.size();
-    std::vector<int> result;
-    int current_value = 0;
-    
-    for(int i = 0; i < lenght ; i++)
+// Time complexity = O(n)
+// Space complexity = O(1)
+
+// The second approach
+
+vector<string> fizzBuzz2(int n)
+{
+    vector<string> result;
+    string temp_str = "";
+
+    bool is_divisible_by3 = false;
+    bool is_divisible_by5 = false;
+
+    for (uint16_t i = 1; i <= n; i++)
     {
-        current_value = abs(nums[i]);
-        nums[current_value - 1] = -abs(nums[current_value - 1]);
+        is_divisible_by3 = i % 3 == 0 ? true : false;
+        is_divisible_by5 = i % 5 == 0 ? true : false;
+        temp_str = "";
+
+        if (is_divisible_by3)
+        {
+            temp_str += "Fizz";
+        }
+
+        if (is_divisible_by5)
+        {
+            temp_str += "Buzz";
+        }
+
+        if (temp_str.empty())
+        {
+            temp_str += to_string(i);
+        }
+
+        result.push_back(temp_str);
     }
 
-    for(int i = 0; i < lenght; i++)
-    {
-        if(nums[i] > 0)
-        {
-            result.push_back(i + 1);
-        }
-    }
-    
     return result;
-}
-
-
-struct SinglyListNode {
-    int val;
-    SinglyListNode *next;
-    SinglyListNode(int x) : val(x), next(NULL) {}
-};
-
-struct ListNode {
-    int val;
-    ListNode *next;
-    ListNode(int x) : val(x), next(NULL) {}
-};
-
-class MyLinkedList {
-private:
-    SinglyListNode  *head_node;
-
-public:
-    MyLinkedList() {
-        head_node = NULL;
-    }
-    
-    int getLenght(void)
-    {
-        SinglyListNode  *cur_node = head_node;
-        int count = 0;
-        
-        while(NULL != cur_node)
-        {
-            cur_node = cur_node->next;
-            ++count;
-        }
-
-        return count;
-    }
-    
-    
-    int get(int index) {
-        SinglyListNode  *cur_node = head_node;
-        int count = 0;
-        
-        if(head_node == NULL)
-        {
-            return -1;
-        }
-
-        while(NULL != cur_node)
-        {
-            if(count == index)
-            {
-                return cur_node->val;
-            }
-            cur_node = cur_node->next;
-            ++count;
-        }
-
-        return -1;
-    }
-    
-    void addAtHead(int val) {
-        SinglyListNode  *new_node = new SinglyListNode(val);
-        if(NULL == head_node)
-        {
-            head_node = new_node;
-        }
-        else
-        {
-            new_node->next = head_node;
-            head_node = new_node;
-        }
-    }
-    
-    void addAtTail(int val) {
-        SinglyListNode  *new_node = new SinglyListNode(val);
-        SinglyListNode  *cur_node = head_node;
-
-        if(NULL == head_node)
-        {
-            head_node = new_node;
-        }
-        else
-        {
-            while(NULL != cur_node->next)
-            {
-                cur_node = cur_node->next;
-            }
-            cur_node->next = new_node;
-        }
-    }
-    
-    void addAtIndex(int index, int val) {
-         int lenght = getLenght();
-
-        if(lenght == index)
-        {
-            addAtTail(val);
-        }
-        else if(0 == index)
-        {
-            addAtHead(val);
-        }
-        else if(index < lenght)
-        {
-            SinglyListNode  *new_node = new SinglyListNode(val);
-            SinglyListNode  *cur_node = head_node;
-            SinglyListNode  *pre_node = head_node;
-            int count = 0;
-            
-            while(NULL != cur_node)
-            {
-                if(count == index)
-                {
-                    new_node->next = pre_node->next;
-                    pre_node->next = new_node;
-                    return;
-                }
-                pre_node = cur_node;
-                cur_node = cur_node->next;
-                ++count;
-            }
-        }
-        else
-        {
-            // Do nothing
-        }
-    }
-    
-    void deleteAtIndex(int index) 
-    {
-        SinglyListNode  *cur_node = head_node;
-
-        if(head_node == NULL)
-        {
-            return;
-        }
-
-        int lenght = getLenght();
-
-        if(0 == index)
-        {
-            head_node = head_node-> next;
-            delete cur_node;
-        }
-        else if(index < lenght)
-        {
-            SinglyListNode  *cur_node = head_node;
-            SinglyListNode  *pre_node = head_node;
-            SinglyListNode  *temp_node;
-            int count = 0;
-            
-            while(NULL != cur_node)
-            {
-                if(count == index)
-                {
-                    temp_node = cur_node;
-                    pre_node->next = cur_node->next;
-                    delete cur_node;
-                    return;
-                }
-                pre_node = cur_node;
-                cur_node = cur_node->next;
-                ++count;
-            }
-        }
-        else 
-        {
-            // Do nothing
-        }
-    }
-};
-
-/**
- * Your MyLinkedList object will be instantiated and called as such:
- * MyLinkedList* obj = new MyLinkedList();
- * int param_1 = obj->get(index);
- * obj->addAtHead(val);
- * obj->addAtTail(val);
- * obj->addAtIndex(index,val);
- * obj->deleteAtIndex(index);
- */
-
- bool hasCycle(ListNode *head) {
-    ListNode  *slow_node = head;
-    ListNode  *fast_node = head;
-
-    while(NULL != slow_node && NULL != fast_node && NULL != fast_node->next)
-    {
-        slow_node = slow_node->next;
-        fast_node = fast_node->next;
-        fast_node = fast_node->next;
-        if(fast_node == slow_node)
-        {
-            return true;                
-        }
-    }
-
-    return false;
-}
-
-
-ListNode *detectCycle(ListNode *head) {
-    ListNode  *slow_node = head;
-    ListNode  *fast_node = head;
-
-    while(NULL != slow_node && NULL != fast_node && NULL != fast_node->next)
-    {
-        slow_node = slow_node->next;
-        fast_node = fast_node->next;
-        fast_node = fast_node->next;
-        if(fast_node == slow_node)
-        {
-            slow_node = head;
-            while(slow_node != fast_node)
-            {
-                slow_node = slow_node->next;
-                fast_node = fast_node->next;
-            }
-            return slow_node;
-        }
-    }
-    return NULL;
-}
-
-
-ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
-    ListNode  *A_node = headA;
-    ListNode  *B_node = headB;
-
-    while(A_node != B_node)
-    {
-        if(NULL == A_node)
-        {
-            A_node = headB;
-        }
-        else
-        {
-            A_node = A_node->next; 
-        }
-
-        if(NULL == B_node)
-        {
-            B_node = headA;
-        }
-        else
-        {
-            B_node = B_node->next; 
-        }
-    }
-
-    return A_node;    
-}
-
-ListNode* removeNthFromEnd(ListNode* head, int n) {
-    ListNode  *cur_node = head;
-    int count = 0;
-
-    // Find the number of nodes
-    while(NULL != cur_node)
-    {
-        cur_node = cur_node->next;
-        ++count;
-    }
-
-    // Calculate position that need to erase
-    int pos = count - n;
-    int new_count = 0;
-    cur_node = head;
-    ListNode *pre_node = head;
-
-    while(NULL != cur_node)
-    {
-        // Case at head position
-        if(0 == pos)
-        {
-            if(1 == pos)
-            {
-                delete head;
-                head = NULL;
-            }
-            else
-            {
-                head = head->next;
-                delete cur_node;
-            }
-            break;
-        }
-        else
-        {
-            if(new_count == pos)
-            {
-                pre_node->next = cur_node->next;
-                delete cur_node;
-                break;
-            }
-            pre_node = cur_node;
-            cur_node = cur_node->next;
-            ++new_count;
-        }
-    }   
-
-    return head;
 }
 
 int main()
 {
-    std::vector<int> nums1 = {2,1};
-    std::cout << validMountainArray(nums1) << std::endl;
+    vector<string> result;
+
+    result = fizzBuzz2(3);
+    print_output(result);
+
+    result = fizzBuzz2(5);
+    print_output(result);
+
+    result = fizzBuzz2(15);
+    print_output(result);
 
     return 0;
 }
@@ -609,7 +110,7 @@ int main()
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu
 
-// Tips for Getting Started: 
+// Tips for Getting Started:
 //   1. Use the Solution Explorer window to add/manage files
 //   2. Use the Team Explorer window to connect to source control
 //   3. Use the Output window to see build output and other messages
