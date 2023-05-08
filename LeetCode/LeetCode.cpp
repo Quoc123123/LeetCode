@@ -51,57 +51,36 @@ vector<string> fizzBuzz(int n)
     return result;
 }
 
-// Time complexity = O(n)
+// Time complexity = O(n2)
 // Space complexity = O(1)
-
-// The second approach
-
-vector<string> fizzBuzz2(int n)
+void sortColors(vector<int> &nums)
 {
-    vector<string> result;
-    string temp_str = "";
+    uint16_t len = nums.size();
+    uint16_t min_index = 0;
 
-    bool is_divisible_by3 = false;
-    bool is_divisible_by5 = false;
-
-    for (uint16_t i = 1; i <= n; i++)
+    for (uint16_t i = 0; i < len; i++)
     {
-        is_divisible_by3 = i % 3 == 0 ? true : false;
-        is_divisible_by5 = i % 5 == 0 ? true : false;
-        temp_str = "";
-
-        if (is_divisible_by3)
+        min_index = i;
+        for (uint16_t j = i + 1; j < len; j++)
         {
-            temp_str += "Fizz";
+            if (nums[min_index] > nums[j])
+            {
+                min_index = j;
+            }
         }
 
-        if (is_divisible_by5)
-        {
-            temp_str += "Buzz";
-        }
-
-        if (temp_str.empty())
-        {
-            temp_str += to_string(i);
-        }
-
-        result.push_back(temp_str);
+        int temp_value = nums[min_index];
+        nums[min_index] = nums[i];
+        nums[i] = temp_value;
     }
-
-    return result;
 }
 
 int main()
 {
-    vector<string> result;
+    // vector<int> result = {2, 0, 2, 1, 1, 0};
+    vector<int> result = {0, 1};
 
-    result = fizzBuzz2(3);
-    print_output(result);
-
-    result = fizzBuzz2(5);
-    print_output(result);
-
-    result = fizzBuzz2(15);
+    sortColors(result);
     print_output(result);
 
     return 0;
